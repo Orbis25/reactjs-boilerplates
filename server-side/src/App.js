@@ -1,25 +1,32 @@
-import React from "react";
-import logo from "./logo.svg";
+import React, { useContext } from "react";
 import "./App.css";
+import { SimpleProvider, SimpleContext } from "./store";
+
+const Counter = () => {
+  const context = useContext(SimpleContext);
+
+  const handleClickIncrement = () => {
+    context.setCount(context.count++);
+  };
+
+  const handleClickDecrement = () => {
+    context.setCount(context.count--);
+  };
+
+  return (
+    <div>
+      <button onClick={handleClickIncrement}>INCREMENTE</button>
+      {context.count}
+      <button onClick={handleClickDecrement}>DECREMENT</button>
+    </div>
+  );
+};
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <SimpleProvider>
+      <Counter />
+    </SimpleProvider>
   );
 }
 
